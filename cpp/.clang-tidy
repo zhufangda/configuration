@@ -1,0 +1,139 @@
+# All the available checks can be found here: https://clang.llvm.org/extra/clang-tidy/checks/list.html
+# Some settings are copied from here: https://blog.csdn.net/snsn1984/article/details/104857233
+# Checks: "-*,clang-analyzer-cplusplus.*,cppcoreguidelines-*,misc-*,modernize-use-override,modernize-use-nullptr,modernize-use-noexcept,modernize-replace-auto-ptr,readability-braces-around-statements,performance-move-const-arg"
+---
+Checks: readability-identifier-naming.*,clang-analyzer-cplusplus.*,cppcoreguidelines-*,misc-*, modernize-*,readability-braces-around-statements,performance-*,bugprone-*,-cppcoreguidelines-non-private-member-variables-in-classes,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,google-*,-modernize-use-trailing-return-type,-bugprone-easily-swappable-parameters,-misc-non-private-member-variables-in-classes,-modernize-concat-nested-namespaces,-modernize-avoid-c-arrays,-cppcoreguidelines-init-variables,-misc-non-private-member-variables-in-classes,-cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers
+HeaderFilterRegex: ".*"
+CheckOptions:
+  # ------------------------------------------------------------------------------
+  # Classes and structs
+  # Class names
+  - key:   readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key:   readability-identifier-naming.StructCase,
+    value: CamelCase
+  # static const class members
+  - key:   readability-identifier-naming.ClassConstantCase
+    value: CamelCase
+  - key:   readability-identifier-naming.ClassConstantPrefix
+    value: "k"
+  # static class members (non-const)
+  - key:   readability-identifier-naming.ClassMemberCase
+    value: lower_case
+  - key:   readability-identifier-naming.ClassMemberSuffix
+    value: _
+    # Class member functions - any access modifier (public, private, etc)
+  - key:   readability-identifier-naming.ClassMethodCase
+    value: CamelBack
+  # Class member variable catchall
+  - key:   readability-identifier-naming.MemberCase
+    value: lower_case
+  - key:   readability-identifier-naming.PublicMemberCase
+    value: lower_case
+  - key:   readability-identifier-naming.PublicMemberSuffix
+    value: ''
+  # Private class member variables
+  - key:   readability-identifier-naming.PrivateMemberCase
+    value: lower_case
+  - key:   readability-identifier-naming.PrivateMemberSuffix
+    value: '_'
+  # Protected member variables
+  - key:   readability-identifier-naming.ProtectedMemberCase
+    value: lower_case
+  - key:   readability-identifier-naming.ProtectedMemberSuffix
+    value: '_'
+
+  # ---------------------------------------------------------------------------
+  # Enum declaration name case
+  - key:   readability-identifier-naming.EnumCase
+    value: CamelCase
+  # Enum value declarations (the stuff inside the enum)
+  - key:   readability-identifier-naming.EnumConstantCase
+    value: CamelCase
+  - key:   readability-identifier-naming.EnumConstantPrefix
+    value: 'k'
+
+  # ---------------------------------------------------------------------------
+  # Templates
+  - key:   readability-identifier-naming.TemplateParameterCase
+    value: CamelCase
+  # - key:  readability-identifier-naming.TemplateTemplateParameterCase
+  #   value: CamelCase
+  # - key:  readability-identifier-naming.TypeTemplateParameterCase
+  #   value: CamelCase
+  # - key:  readability-identifier-naming.ValueTemplateParameterCase
+  #   value: CamelCase
+
+
+
+  # ---------------------------------------------------------------------------
+  # General and global
+  # constexpr variable assignments
+  - key:   readability-identifier-naming.ConstexprVariableCase
+    value: CamelCase
+  - key:   readability-identifier-naming.ConstexprVariablePrefix
+    value: 'k'
+  # Namespaces
+  - key:   readability-identifier-naming.NamespaceCase
+    value: lower_case
+  # General function parameter names
+  - key:   readability-identifier-naming.ParameterCase
+    value: lower_case
+  # Union names
+  - key:   readability-identifier-naming.UnionCase
+    value: CamelCase
+  # General variable declarations
+  - key:   readability-identifier-naming.VariableCase
+    value: lower_case
+  # Typedef names
+  - key:   readability-identifier-naming.TypedefCase
+    value: CamelCase
+  # Names for type aliases: using Name = OtherThing;
+  # Includes aliases declared in classes.
+  - key:   readability-identifier-naming.TypeAliasCase
+    value: CamelCase
+  # Free function case
+  - key:   readability-identifier-naming.FunctionCase
+    value: CamelBack
+  # Global/free constant variable case. Includes anynomous namespaces.
+  - key:   readability-identifier-naming.GlobalConstantCase
+    value: CamelCase
+  - key:   readability-identifier-naming.GlobalConstantPrefix
+    value: 'k'
+  # Variables in the global scope.
+  - key:   readability-identifier-naming.GlobalVariableCase
+    value: lower_case
+  - key:   readability-identifier-naming.GlobalVariablePrefix
+    value: 'g_'
+  # Constants declared within local function scopes. Same as normal variables.
+  - key:   readability-identifier-naming.LocalConstantCase
+    value: lower_case
+  - key:   readability-identifier-naming.LocalConstantPrefix
+    value: ''
+  # Local variable
+  - key:   readability-identifier-naming.LocalVariableCase
+    value: lower_case
+  # Marco
+  - key:   readability-identifier-naming.MacroDefinitionCase
+    value: UPPER_CASE
+  - key:   readability-identifier-naming.MacroDefinitionIgnoredRegexp
+    value: "^[A-Z]+(_[A-Z]+)*_$"
+  # Ignore main and wmain function
+  - key:   readability-identifier-naming.IgnoreMainLikeFunctions
+    value: 1
+  # rule of 3
+  - key:   cppcoreguidelines-special-member-functions.AllowMissingMoveFunctionsWhenCopyIsDeleted
+    value: 1
+  - key:   cppcoreguidelines-special-member-functions.AllowMissingMoveFunctions
+    value: 1
+  - key:   cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+    value: 1
+  - key:   misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic
+    value: 1
+  # Magic number ignore list
+  - key:   readability-magic-numbers.IgnoredIntegerValues
+    value: 1;2;5;10;20;30;40,50;1000;100000000
+  - key:   readability-magic-numbers.IgnorePowersOf2IntegerValues
+    value: 1
+  - key:   readability-magic-numbers.IgnoredFloatingPointValues
+    value: 0.25;0.5;0.75;1.0;2.0;3.0;10.0;100.0;1000.0;0.1;0.001;0.0001;;-1.0;-2.0;-3.0;
